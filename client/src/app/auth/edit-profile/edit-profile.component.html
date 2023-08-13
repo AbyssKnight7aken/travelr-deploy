@@ -1,0 +1,99 @@
+<div class="container">
+    <div class="screen">
+        <div class="screen__content">
+            <form class="login" #editUserForm="ngForm" (ngSubmit)="editUserHandler(editUserForm)">
+                <h1 class="button__text">Edit User Info</h1>
+
+
+                <div class="image-upload">
+                    <label for="image">
+                        <img *ngIf="!selectedFile" [ngStyle]="{ 'background-image': 'url(' + 'data:image/png;base64,' + profilePic + ')'}"/>
+                        <img *ngIf="selectedFile" id="output" [src]="url" alt="Image" [ngStyle]="{ 'background-image': 'url( + {{selectedFile}} + )'}">
+                    </label>
+                  
+                    <input type="file" id="image" name="img" ngModel #inputImage="ngModel" (change)="loadFile($event)"
+						placeholder="Image" accept="image/x-png,image/gif,image/jpeg">
+                  </div>
+
+
+                <!-- USERNAME -->
+                <div class="login__field">
+                    <i class="login__icon fas fa-user"></i>
+                    <input [ngClass]="inputUsername.errors && inputUsername.touched ?  'input-error' : '' " type="text"
+                        class="login__input" name="username" placeholder="Username" ngModel #inputUsername="ngModel"
+                        required minlength="3" [ngModel]="user?.username">
+                </div>
+
+                <ng-container *ngIf="inputUsername.touched">
+					<p class="error" *ngIf="inputUsername.errors?.['required']">
+						Username is required!
+					</p>
+					<p class="error" *ngIf="inputUsername.errors?.['minlength']">
+						Username must be at least {{inputUsername.errors?.['minlength']['requiredLength']}} characters!
+					</p>
+				</ng-container>
+
+                <!-- EMAIL -->
+                <div class="login__field">
+                    <i Class="login__icon fas fa-envelope"></i>
+                    <input [ngClass]="inputEmail.errors && inputEmail.touched ?  'input-error' : '' " type="email"
+                        class="login__input" name="email" placeholder="Email" ngModel #inputEmail="ngModel" required
+                        minlength="10" [ngModel]="user?.email" [email]="validateEmail">
+                </div>
+
+                <ng-container *ngIf="inputEmail.touched">
+					<p class="error" *ngIf="inputEmail.errors?.['required']">
+						Email is required!
+					</p>
+					<p class="error" *ngIf="inputEmail.errors?.['minlength']">
+						Email must be at least {{inputEmail.errors?.['minlength']['requiredLength']}} characters!
+					</p>
+					<p class="error" *ngIf="inputEmail.errors?.['email']">
+						Email is not valid!
+					</p>
+				</ng-container>
+
+
+                <!-- PASSWORD -->
+                <div class="login__field">
+					<i
+						[ngClass]="inputPassword.errors && inputPassword.touched ?  'login__icon fas fa-lock envelope error-icon' : 'login__icon fas fa-lock'"></i>
+					<input [ngClass]="inputPassword.errors && inputPassword.touched ?  'input-error' : '' "
+						type="password" class="login__input" name="password" placeholder="Enter your password!" ngModel
+						#inputPassword="ngModel" required minlength="6">
+				</div>
+
+				<ng-container *ngIf="inputPassword.touched">
+					<p class="error" *ngIf="inputPassword.errors?.['required']">
+						Password is required for confirmation!
+					</p>
+					<p class="error" *ngIf="inputPassword.errors?.['minlength']">
+						Password must be at least
+						{{inputPassword.errors?.['minlength']['requiredLength']}} characters!
+					</p>
+				</ng-container>
+
+
+                <ng-container *ngIf="errorMesssageFromServer">
+					<p class="error">
+						{{errorMesssageFromServer}}
+					</p>
+				</ng-container>
+
+                <!-- BUTTON -->
+                <button class="button login__submit">
+                    <span class="button__text">Save Profile</span>
+                    <i class="button__icon fas fa-chevron-right"></i>
+                </button>
+            </form>
+
+        </div>
+        <div class="screen__background">
+            <span class="screen__background__shape screen__background__shape4"></span>
+            <span class="screen__background__shape screen__background__shape3"></span>
+            <span class="screen__background__shape screen__background__shape2"></span>
+            <span class="screen__background__shape screen__background__shape1"></span>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,76 @@
+<div class="container">
+	<div class="screen">
+		<div class="screen__content">
+			<form class="login" #loginForm="ngForm" (ngSubmit)="loginHandler(loginForm)">
+				<h2 [ngClass]="loginForm.touched && (inputPassword.errors || inputEmail.errors || errorMesssageFromServer) ?  'button__text error-icon' : 'button__text'">Login</h2>
+
+				<div class="login__field">
+					<i
+						[ngClass]="inputEmail.errors && inputEmail.touched ?  'login__icon fas fa-envelope error-icon' : 'login__icon fas fa-envelope'"></i>
+					<input [ngClass]="inputEmail.errors && inputEmail.touched ?  'input-error' : '' " type="email"
+						class="login__input" name="email" placeholder="Email" ngModel #inputEmail="ngModel" required
+						minlength="10" [email]="validateEmail">
+				</div>
+
+				<ng-container *ngIf="inputEmail.touched">
+					<p class="error" *ngIf="inputEmail.errors?.['required']">
+						Email is required!
+					</p>
+					<p class="error" *ngIf="inputEmail.errors?.['minlength']">
+						Email must be at least {{inputEmail.errors?.['minlength']['requiredLength']}} characters!
+					</p>
+					<p class="error" *ngIf="inputEmail.errors?.['email']">
+						Email is not valid!
+					</p>
+				</ng-container>
+
+
+				<div class="login__field">
+					<i
+						[ngClass]="inputPassword.errors && inputPassword.touched ?  'login__icon fas fa-lock envelope error-icon' : 'login__icon fas fa-lock'"></i>
+					<input [ngClass]="inputPassword.errors && inputPassword.touched ?  'input-error' : '' "
+						type="password" class="login__input" name="password" placeholder="Password" ngModel
+						#inputPassword="ngModel" required minlength="6">
+				</div>
+
+				<ng-container *ngIf="inputPassword.touched">
+					<p class="error" *ngIf="inputPassword.errors?.['required']">
+						Password is required!
+					</p>
+					<p class="error" *ngIf="inputPassword.errors?.['minlength']">
+						Password must be at least
+						{{inputPassword.errors?.['minlength']['requiredLength']}} characters!
+					</p>
+				</ng-container>
+
+				<ng-container *ngIf="errorMesssageFromServer">
+					<p class="error">
+						{{errorMesssageFromServer}}
+					</p>
+				</ng-container>
+
+				<button [disabled]="loginForm.invalid" class="button login__submit">
+					<span class="button__text">Login</span>
+					<i class="button__icon fas fa-chevron-right"></i>
+				</button>
+			</form>
+
+			<div class="social-login">
+				<!-- <h5>Don't have an account?</h5> -->
+				<div class="social-icons">
+					<!-- <h4 class="social-login__icon">Register</h4> -->
+					<a routerLink="/user/register" class="social-login__icon">Register</a>
+					<!-- <a href="#" class="social-login__icon fab fa-facebook"></a>
+					<a href="#" class="social-login__icon fab fa-twitter"></a> -->
+				</div>
+			</div>
+		</div>
+
+		<div class="screen__background">
+			<span class="screen__background__shape screen__background__shape4"></span>
+			<span class="screen__background__shape screen__background__shape3"></span>
+			<span class="screen__background__shape screen__background__shape2"></span>
+			<span class="screen__background__shape screen__background__shape1"></span>
+		</div>
+	</div>
+</div>

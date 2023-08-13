@@ -1,0 +1,9 @@
+<div class="modal-container" id="m2-o">
+    <div class="modal">
+        <h1 class="modal__title">Delete Confirmation</h1>
+        <p class="modal__text">Are you sure you want to delete <strong>{{name}}</strong> permanently?</p>
+        <button id="del" (click)="deleteConfirm()" class="modal__btnDel">Delete &rarr;</button>
+        <button (click)="close()" class="modal__btn">Cancel &rarr;</button>
+        <a href="javascript:void(0)" class="link-2" (click)="close()"></a>
+    </div>
+</div>

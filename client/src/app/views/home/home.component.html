@@ -1,0 +1,22 @@
+<main>
+    <section id="hero">
+        <h1>Welcome</h1>
+        
+        <p>Hello and welcome to <strong>travelR</strong> - your passport to a world of captivating journeys<br />
+            and breathtaking vistas! Embark on a visual odyssey unlike any other as we invite you<br />
+            to share the magic of your journeys all over the world through the art of photography.</p>
+
+        <app-loader class="loader" *ngIf="!rescentLogs" />
+        
+        <ul class="rescent" *ngIf="rescentLogs">
+            <li *ngFor="let log of rescentLogs">
+                <a routerLink="/logs/{{log._id}}">
+                    <app-card [log]="log" />
+                </a>
+            </li>
+        </ul>
+
+    </section>
+
+
+</main>

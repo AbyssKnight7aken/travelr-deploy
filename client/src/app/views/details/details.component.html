@@ -1,0 +1,75 @@
+<main>
+    <app-modal *ngIf="isShown" [isShown]="isShown" [name]="name" (closeModal)="onCloseModal($event)"
+        (confirmDelete)="onDeleteConfirmed()"></app-modal>
+    <section id="hero">
+        <app-loader *ngIf="isLoading" />
+        <div *ngIf="!isLoading" class="rescent">
+            <div class="container" [ngStyle]="{ 'background-image': 'url(' + 'data:image/png;base64,' + image + ')'}">
+                <div class="container__info">
+                    <div class="actions">
+                        <span *ngIf=" user && !isOwner && !isLiked" (click)="like()"><i class="fas fa-heart"></i>{{log.likes.length}}</span>
+                        <span *ngIf="!user || isOwner || isLiked"><i class="fas fa-heart"></i>{{log.likes.length}}</span>
+                        <span (click)="showCommentSection()"><i class="fas fa-comment-alt"></i>{{log.commentList.length}}</span>
+                        <span *ngIf="user" (click)="downloadImage()"><i class="fas fa-download"></i>{{log.downloads.length}}</span>
+                        <span *ngIf="!user"><i class="fas fa-download"></i>{{log.downloads.length}}</span>
+                    </div>
+                    <div *ngIf="isOwner" class="owner">
+                        <a routerLink="/logs/{{log?._id}}/edit"><i class="fas fa-pen-to-square"></i></a>
+                        <a href="javascript:void(0)" (click)="showDeleteModal()"><i class="fas fa-trash"></i></a>
+                    </div>
+                </div>
+                <div class="container__profile">
+                    <img [ngStyle]="{ 'background-image': 'url(' + 'data:image/png;base64,' + avatar + ')'}" />
+                    <div class="container__profile__text">
+                        <h2>{{log?.name}}</h2>
+                        <p>by <b>{{log?._ownerId?.username}}</b></p>
+                        <p>{{log?.date}}</p>
+                        <p>{{log?.location}}</p>
+                        <p>{{log?.description}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+
+    <div *ngIf="showComments" class="comment-session">
+        <div  *ngIf="log?.commentList" class="post-comment">
+
+            <div *ngFor="let comment of log?.commentList" class="list">
+                <div class="user">
+                    <div class="user-image"><img [ngStyle]="{ 'background-image': 'url(' + 'data:image/png;base64,' + getImageAsBase64(comment.user.img.data.data) + ')'}"></div>
+                    <div class="user-meta">
+                        <div class="name"><strong>{{comment.user.username}}</strong></div>
+                        <div class="day">{{getCreatedAt(comment._id)}}</div>
+                    </div>
+                </div>
+                <div class="comment-post">{{comment.comment}}</div>
+            </div>
+
+        </div>
+        <div *ngIf="isLoggedIn" class="comment-box">
+            <div class="user">
+                <div class="image"><img [ngStyle]="{ 'background-image': 'url(' + 'data:image/png;base64,' + getImageAsBase64(user?.img?.data?.data) + ')'}"></div>
+                <div class="name"><strong>{{user?.username}}</strong></div>
+            </div>
+            <form #commentForm="ngForm" (ngSubmit)="addComment(commentForm)">
+                <textarea name="comment" placeholder="Your Message" ngModel #inputComment="ngModel" required
+                    minlength="3"></textarea>
+
+                    <ng-container *ngIf="inputComment.touched">
+                        <p class="error" *ngIf="inputComment.errors?.['required']">
+                            Comment is required!
+                        </p>
+                        <p class="error" *ngIf="inputComment.errors?.['minlength']">
+                            Comment must be at least {{inputComment.errors?.['minlength']['requiredLength']}} characters!
+                        </p>
+                    </ng-container>
+
+                <button [disabled]="commentForm.invalid" class="comment-submit">Comment</button>
+            </form>
+        </div>
+    </div>
+
+</main>

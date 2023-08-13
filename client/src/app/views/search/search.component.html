@@ -1,0 +1,16 @@
+<main>
+    <section id="hero">
+        <h1 *ngIf="searchService.searchResult.length > 0"><strong>Search</strong> results...</h1>
+        <h1 *ngIf="searchService.searchResult.length === 0">There are no results, based on your search!</h1>
+        <div class="pagination">
+            <app-pagination *ngIf="searchService.searchResult.length > 0" [currentPage$]="searchService.currentPage$" [pages]="searchService.pages" />
+        </div>
+        <ul class="rescent" *ngIf="searchService.searchResult.length > 0">
+            <li *ngFor="let log of searchService.searchResult as logs">
+                <a routerLink="/logs/{{log._id}}" >
+                    <app-card [log]="log" />
+                </a>
+            </li>
+        </ul>
+    </section>
+</main>

@@ -1,0 +1,140 @@
+<div class="container">
+	<div class="screen">
+		<div class="screen__content">
+			<form class="login" #form="ngForm" (ngSubmit)="create(form)" enctype="multipart/form-data" method="post">
+				<h2 [ngClass]="form.touched && (inputName.errors || inputDate.errors || inputDescription.errors || inputLocation.errors || inputImage.errors || errorMesssageFromServer) ?  'button__text error-icon' : 'button__text'"
+					class="button__text">Add Log...</h2>
+
+				<!-- NAME -->
+				<div class="login__field">
+					<i class="login__icon fa-brands fa-pix"></i>
+					<i
+						[ngClass]="inputName.errors && inputName.touched ?  'login__icon fa-brands fa-pix error-icon' : 'login__icon fa-brands fa-pix'"></i>
+					<input [ngClass]="inputName.errors && inputName.touched ?  'input-error' : '' " type="text"
+						class="login__input" name="name" placeholder="Name" ngModel #inputName="ngModel" required
+						minlength="3" maxlength="20">
+				</div>
+
+				<ng-container *ngIf="inputName.touched">
+					<p class="error" *ngIf="inputName.errors?.['required']">
+						Name is required!
+					</p>
+					<p class="error" *ngIf="inputName.errors?.['minlength']">
+						Name must be at least {{inputName.errors?.['minlength']['requiredLength']}} characters!
+					</p>
+					<p class="error" *ngIf="inputName.errors?.['maxlength']">
+						Name should not be more than {{inputName.errors?.['maxlength']['requiredLength']}} characters!
+					</p>
+				</ng-container>
+
+				<!-- DATE -->
+				<div class="login__field">
+					<i
+						[ngClass]="inputDate.errors && inputDate.touched ?  'login__icon fa-solid fa-calendar error-icon' : 'login__icon fa-solid fa-calendar'"></i>
+					<input [ngClass]="inputDate.errors && inputDate.touched ?  'input-error' : '' " type="date"
+						class="login__input" name="date" placeholder="Date" ngModel #inputDate="ngModel" required>
+				</div>
+
+				<ng-container *ngIf="inputDate.touched">
+					<p class="error" *ngIf="inputDate.errors?.['required']">
+						Date is required!
+					</p>
+				</ng-container>
+
+				<!-- DESCRIPTION -->
+				<div class="login__field">
+					<i
+						[ngClass]="inputDescription.errors && inputDescription.touched ?  'login__icon fas fa-comment error-icon' : 'login__icon fas fa-comment'"></i>
+					<textarea [ngClass]="inputDescription.errors && inputDescription.touched ?  'input-error' : '' "
+						type="text" class="login__input" name="description" placeholder="Description" ngModel
+						#inputDescription="ngModel" required minlength="10" maxlength="50"></textarea>
+				</div>
+
+				<ng-container *ngIf="inputDescription.touched">
+					<p class="error" *ngIf="inputDescription.errors?.['required']">
+						Description is required!
+					</p>
+					<p class="error" *ngIf="inputDescription.errors?.['minlength']">
+						Description must be at least {{inputDescription.errors?.['minlength']['requiredLength']}}
+						characters!
+					</p>
+					<p class="error" *ngIf="inputDescription.errors?.['maxlength']">
+						Description should not be more than {{inputDescription.errors?.['maxlength']['requiredLength']}}
+						characters!
+					</p>
+				</ng-container>
+
+				<!-- LOCATION -->
+				<div class="login__field">
+					<i
+						[ngClass]="inputLocation.errors && inputLocation.touched ?  'login__icon fa-solid fa-location-crosshairs error-icon' : 'login__icon fa-solid fa-location-crosshairs'"></i>
+					<input [ngClass]="inputLocation.errors && inputLocation.touched ?  'input-error' : '' " type="text"
+						class="login__input" name="location" placeholder="Location" ngModel #inputLocation="ngModel"
+						required minlength="5" maxlength="30">
+				</div>
+
+				<ng-container *ngIf="inputLocation.touched">
+					<p class="error" *ngIf="inputLocation.errors?.['required']">
+						Location is required!
+					</p>
+					<p class="error" *ngIf="inputLocation.errors?.['minlength']">
+						Location must be at least {{inputLocation.errors?.['minlength']['requiredLength']}}
+						characters!
+					</p>
+					<p class="error" *ngIf="inputLocation.errors?.['maxlength']">
+						Location should not be more than {{inputLocation.errors?.['maxlength']['requiredLength']}}
+						characters!
+					</p>
+				</ng-container>
+
+				<!-- IMAGE -->
+				<div class="login__field">
+					<i
+						[ngClass]="inputImage.errors && inputImage.touched ?  'login__icon fa-solid fa-file-image error-icon' : 'login__icon fa-solid fa-file-image'"></i>
+					<input
+						[ngClass]="inputImage.errors && inputImage.touched ?  'login__input input-error' : 'login__input' "
+						type="file" id="image" name="img" ngModel #inputImage="ngModel" (change)="loadFile($event)"
+						placeholder="Image">
+				</div>
+
+				<ng-container *ngIf="inputImage.touched">
+					<p class="error" *ngIf="inputImage.errors?.['required']">
+						Image is required!
+					</p>
+				</ng-container>
+
+				<ng-container *ngIf="errorMesssageFromServer">
+					<p class="error">
+						{{errorMesssageFromServer}}
+					</p>
+				</ng-container>
+
+				<button [disabled]="form.invalid" class="button login__submit">
+					<span class="button__text">Create</span>
+					<i class="button__icon fas fa-chevron-right"></i>
+				</button>
+			</form>
+			<!-- <div class="social-login">
+				<h3>log in via</h3>
+				<div class="social-icons">
+					<a href="#" class="social-login__icon fab fa-instagram"></a>
+					<a href="#" class="social-login__icon fab fa-facebook"></a>
+					<a href="#" class="social-login__icon fab fa-twitter"></a>
+				</div>
+			</div> -->
+		</div>
+		<div class="screen__background">
+			<span class="screen__background__shape screen__background__shape4"></span>
+			<span class="screen__background__shape screen__background__shape3"></span>
+			<span class="screen__background__shape screen__background__shape2"></span>
+			<span class="screen__background__shape screen__background__shape1"></span>
+		</div>
+	</div>
+	<ng-container *ngIf="selectedFile">
+	<div class="screen">
+		<div class="login">
+			<img style="width: 320px" id="output" [src]="url" alt="Image">
+		</div>
+	</div>
+</ng-container>
+</div>

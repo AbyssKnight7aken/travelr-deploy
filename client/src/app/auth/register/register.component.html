@@ -1,0 +1,137 @@
+<div class="container">
+	<div class="screen">
+		<div class="screen__content">
+			<form class="login" #registerForm="ngForm" (ngSubmit)="registerHandler(registerForm)">
+				<h2 [ngClass]="registerForm.touched && (inputUsername.errors || inputPassword.errors || inputRePass.errors || inputEmail.errors || errorMesssageFromServer) ?  'button__text error-icon' : 'button__text'"
+					class="button__text">Register</h2>
+
+				<!-- USERNAME -->
+				<div class="login__field">
+					<i
+						[ngClass]="inputUsername.errors && inputUsername.touched ?  'login__icon fas fa-user error-icon' : 'login__icon fas fa-user'"></i>
+					<input [ngClass]="inputUsername.errors && inputUsername.touched ?  'input-error' : '' " type="text"
+						class="login__input" name="username" placeholder="Username" ngModel #inputUsername="ngModel"
+						required minlength="3">
+				</div>
+
+				<ng-container *ngIf="inputUsername.touched">
+					<p class="error" *ngIf="inputUsername.errors?.['required']">
+						Username is required!
+					</p>
+					<p class="error" *ngIf="inputUsername.errors?.['minlength']">
+						Username must be at least {{inputUsername.errors?.['minlength']['requiredLength']}} characters!
+					</p>
+				</ng-container>
+
+				<!-- EMAIL -->
+				<div class="login__field">
+					<i
+						[ngClass]="inputEmail.errors && inputEmail.touched ?  'login__icon fas fa-envelope error-icon' : 'login__icon fas fa-envelope'"></i>
+					<input [ngClass]="inputEmail.errors && inputEmail.touched ?  'input-error' : '' " type="email"
+						class="login__input" name="email" placeholder="Email" ngModel #inputEmail="ngModel" required
+						minlength="10" [email]="validateEmail">
+				</div>
+
+				<ng-container *ngIf="inputEmail.touched">
+					<p class="error" *ngIf="inputEmail.errors?.['required']">
+						Email is required!
+					</p>
+					<p class="error" *ngIf="inputEmail.errors?.['minlength']">
+						Email must be at least {{inputEmail.errors?.['minlength']['requiredLength']}} characters!
+					</p>
+					<p class="error" *ngIf="inputEmail.errors?.['email']">
+						Email is not valid!
+					</p>
+				</ng-container>
+
+				<!-- PASSWORD -->
+				<div class="login__field">
+					<i
+						[ngClass]="inputPassword.errors && inputPassword.touched ?  'login__icon fas fa-lock envelope error-icon' : 'login__icon fas fa-lock'"></i>
+					<input [ngClass]="inputPassword.errors && inputPassword.touched ?  'input-error' : '' "
+						type="password" class="login__input" name="password" placeholder="Password" ngModel
+						#inputPassword="ngModel" required minlength="6">
+				</div>
+
+				<ng-container *ngIf="inputPassword.touched">
+					<p class="error" *ngIf="inputPassword.errors?.['required']">
+						Password is required!
+					</p>
+					<p class="error" *ngIf="inputPassword.errors?.['minlength']">
+						Password must be at least
+						{{inputPassword.errors?.['minlength']['requiredLength']}} characters!
+					</p>
+				</ng-container>
+
+				<!-- REPEAT PASSWORD -->
+				<div class="login__field">
+					<i
+						[ngClass]="inputRePass.errors && inputRePass.touched ?  'login__icon fas fa-lock envelope error-icon' : 'login__icon fas fa-lock'"></i>
+					<input [ngClass]="inputRePass.errors && inputRePass.touched ?  'input-error' : '' " type="password"
+						class="login__input" name="repass" placeholder=" Repeat Password" ngModel #inputRePass="ngModel"
+						required minlength="6">
+				</div>
+
+				<ng-container *ngIf="inputRePass.touched">
+					<p class="error" *ngIf="inputRePass.errors?.['required']">
+						Repeat your password!
+					</p>
+					<p class="error" *ngIf="inputRePass.errors?.['minlength']">
+						Password must be at least
+						{{inputRePass.errors?.['minlength']['requiredLength']}} characters!
+					</p>
+					<p class="error" *ngIf="inputRePass.value != inputPassword.value ">
+						Passwords do not match!
+					</p>
+				</ng-container>
+
+				<!-- IMAGE -->
+				<div class="login__field">
+					<i
+						[ngClass]="inputImage.errors && inputImage.touched ?  'login__icon fa-solid fa-file-image error-icon' : 'login__icon fa-solid fa-file-image'"></i>
+					<input
+						[ngClass]="inputImage.errors && inputImage.touched ?  'login__input input-error' : 'login__input' "
+						type="file" id="image" name="img" ngModel #inputImage="ngModel" (change)="loadFile($event)"
+						placeholder="Image">
+				</div>
+
+				<ng-container *ngIf="inputImage.touched">
+					<p class="error" *ngIf="inputImage.errors?.['required']">
+						Image is required!
+					</p>
+				</ng-container>
+
+				<ng-container *ngIf="errorMesssageFromServer">
+					<p class="error">
+						{{errorMesssageFromServer}}
+					</p>
+				</ng-container>
+
+				<!-- BUTTON -->
+				<button [disabled]="registerForm.invalid" class="button login__submit">
+					<span class="button__text">Register</span>
+					<i class="button__icon fas fa-chevron-right"></i>
+				</button>
+			</form>
+
+			<div class="social-login">
+				<div class="social-icons">
+					<a routerLink="/user/login" class="social-login__icon">Login</a>
+				</div>
+			</div>
+		</div>
+		<div class="screen__background">
+			<span class="screen__background__shape screen__background__shape4"></span>
+			<span class="screen__background__shape screen__background__shape3"></span>
+			<span class="screen__background__shape screen__background__shape2"></span>
+			<span class="screen__background__shape screen__background__shape1"></span>
+		</div>
+	</div>
+	<ng-container *ngIf="selectedFile">
+		<div class="screen">
+			<div class="login">
+				<img style="width: 320px" id="output" [src]="url" alt="Image">
+			</div>
+		</div>
+	</ng-container>
+</div>

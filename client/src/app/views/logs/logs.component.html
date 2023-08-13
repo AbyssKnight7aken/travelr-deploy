@@ -1,0 +1,17 @@
+<main>
+    <section id="hero">
+        <h1>Travel <strong>LOGS</strong> all over the world...</h1>
+        <h2 *ngIf="!currentPageLogs$">There are no logs!</h2>
+        <div class="pagination" *ngIf="showPagination">
+            <app-pagination *ngIf="logs" [currentPage$]="currentPage$" [pages]="pages" />
+        </div>
+        <app-loader class="loader" *ngIf="isLoading"/>
+        <ul class="rescent" *ngIf="!isLoading">
+            <li *ngFor="let log of logs">
+                <a routerLink="/logs/{{log._id}}" >
+                    <app-card [log]="log" />
+                </a>
+            </li>
+        </ul>
+    </section>
+</main>

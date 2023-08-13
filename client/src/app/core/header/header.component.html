@@ -1,0 +1,33 @@
+<header>
+    <div class="navbar">
+        <div class="logo"><a routerLink="home">TraveLR</a></div>
+        <ul class="links">
+            <li> <a routerLink="home">Home</a></li>
+            <li> <a routerLink="/logs">Logs</a></li>
+            <li> <a routerLink="about">About</a></li>
+            <li *ngIf="isLoggedIn"> <a routerLink="/logs/create">Add Log</a></li>
+            <li *ngIf="isLoggedIn"> <a routerLink="/user/profile">Welcome,<strong>{{user.username}}</strong></a></li>
+        </ul>
+        <div class="search-box">
+            <button (click)="searchHandler()" class="btn-search"><i class="fas fa-search"></i></button>
+            <input type="text" class="input-search" [(ngModel)]="searchInput" placeholder="Type to Search...">
+        </div>
+        <a *ngIf="!isLoggedIn" routerLink="/user/login" class="action_btn">Sign IN / UP</a>
+        <a *ngIf="isLoggedIn" href="javascript:void(0);" class="action_btn" (click)="logoutHandler()">Logout</a>
+        <div class="toggle_btn">
+            <i (click)="onBtnClick()" [ngClass]="isOpen ?'fa-solid xmark' : 'fa-solid fa fa-bars'"></i>
+        </div>
+    </div>
+
+    <div (click)="onBtnClick()" [ngClass]="isOpen ? 'dropdown_menu open' : 'dropdown_menu'">
+        <li> <a routerLink="home">Home</a></li>
+        <li> <a routerLink="logs">Logs</a></li>
+        <li *ngIf="isLoggedIn"> <a routerLink="/logs/create">Add Log</a></li>
+        <li *ngIf="isLoggedIn"> <a routerLink="/user/profile">Profile</a></li>
+        <li *ngIf="!isLoggedIn"><a routerLink="/user/login" class="action_btn">Sign IN / UP</a></li>
+        <li *ngIf="isLoggedIn"><a href="javascript:void(0);" class="action_btn" (click)="logoutHandler()">Logout</a>
+        </li>
+    </div>
+
+
+</header>

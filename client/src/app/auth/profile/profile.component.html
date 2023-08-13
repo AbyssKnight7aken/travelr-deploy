@@ -1,0 +1,86 @@
+<div class="container">
+    <div class="screen">
+        <div class="screen__content">
+            <form class="login">
+                <h1 class="button__text">User Info</h1>
+
+                <img class="login__field" [ngStyle]="{ 'background-image': 'url(' + 'data:image/png;base64,' + profilePic + ')'}"/>
+
+                <!-- USERNAME -->
+                <div class="login__field">
+                    <i class="login__icon fas fa-user"></i>
+                    <!-- <input [ngClass]="inputUsername.errors && inputUsername.touched ?  'input-error' : '' " type="text"
+                        class="login__input" name="username" placeholder="Username" ngModel #inputUsername="ngModel"
+                        required minlength="3"> -->
+                        <div class="login__input">{{user?.username}}</div>
+                </div>
+
+
+
+                <!-- EMAIL -->
+                <div class="login__field">
+                    <i Class="login__icon fas fa-envelope"></i>
+                    <!-- <input [ngClass]="inputEmail.errors && inputEmail.touched ?  'input-error' : '' " type="email"
+                        class="login__input" name="email" placeholder="Email" ngModel #inputEmail="ngModel" required
+                        minlength="10"> -->
+                        <div class="login__input">{{user?.email}}</div>
+                </div>
+
+
+
+                <!-- IMAGE -->
+                <!-- <div class="login__field">
+					<i
+						[ngClass]="inputImage.errors && inputImage.touched ?  'login__icon fa-solid fa-file-image error-icon' : 'login__icon fa-solid fa-file-image'"></i>
+					<input
+						[ngClass]="inputImage.errors && inputImage.touched ?  'login__input input-error' : 'login__input' "
+						type="file" id="image" name="img" ngModel #inputImage="ngModel" (change)="loadFile($event)"
+						placeholder="Image">
+				</div> -->
+
+
+
+                <!-- <ng-container *ngIf="errorMesssageFromServer">
+					<p class="error">
+						{{errorMesssageFromServer}}
+					</p>
+				</ng-container> -->
+
+                <!-- BUTTON -->
+                <button routerLink="/user/profile/edit" class="button login__submit">
+                    <span class="button__text">Edit Profile</span>
+                    <i class="button__icon fas fa-chevron-right"></i>
+                </button>
+            </form>
+
+        </div>
+        <div class="screen__background">
+            <span class="screen__background__shape screen__background__shape4"></span>
+            <span class="screen__background__shape screen__background__shape3"></span>
+            <span class="screen__background__shape screen__background__shape2"></span>
+            <span class="screen__background__shape screen__background__shape1"></span>
+        </div>
+    </div>
+    <!-- <ng-container *ngIf="selectedFile">
+		<div class="screen">
+			<div class="login">
+				<img style="width: 320px" id="output" [src]="url" alt="Image">
+			</div>
+		</div>
+	</ng-container> -->
+</div>
+
+<section id="hero">
+    <div *ngIf="showPagination" class="pagination">
+        <app-pagination [currentPage$]="currentPage$" [pages]="pages" />
+    </div>
+    <app-loader class="loader" *ngIf="isLoading" />
+    <h2 *ngIf="userLogs$?.length === 0">This user do not have any logs!</h2>
+    <ul *ngIf="userLogs$ as userLogs" class="rescent">
+        <li *ngFor="let log of userLogs">
+            <a routerLink="/logs/{{log._id}}" >
+                <app-card [log]="log" />
+            </a>
+        </li>
+    </ul>
+</section>

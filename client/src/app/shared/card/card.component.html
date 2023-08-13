@@ -1,0 +1,15 @@
+<div class="container" [ngStyle]="{ 'background-image': 'url(' + 'data:image/png;base64,' + getImageAsBase64() + ')'}">
+   <div class="container__info">
+      <span><i class="fas fa-heart"></i>{{log.likes.length}}</span>
+      <span><i class="fas fa-comment-alt"></i>{{log.commentList.length}}</span>
+      <span><i class="fas fa-download"></i>{{log.downloads.length}}</span>
+   </div>
+   <div class="container__profile">
+      <img
+      [ngStyle]="{ 'background-image': 'url(' + 'data:image/png;base64,' + getAvatarAsBase64() + ')'}" />
+      <div class="container__profile__text">
+         <h2>{{log.name}}</h2>
+         <p>by <b>{{log._ownerId.username}}</b></p>
+      </div>
+   </div>
+</div>

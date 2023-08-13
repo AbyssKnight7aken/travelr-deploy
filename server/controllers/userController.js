@@ -25,7 +25,8 @@ userController.post('/register',
             }
 
             const img = {
-                "data": fs.readFileSync("uploads/" + req.file.filename),
+                //"data": fs.readFileSync("uploads/" + req.file.filename),
+                "data": req.file,
                 "contentType": "image/png",
             }
 

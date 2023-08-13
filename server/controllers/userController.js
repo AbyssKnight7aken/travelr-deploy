@@ -10,23 +10,22 @@ const userManager = require('../managers/userManager');
 
 
 userController.post('/register',
-    // body('username').isLength({ min: 3 }).withMessage('Password must be at least 3 characters long'),
-    // body('email').isEmail().withMessage('Invalid email'),
-    // body('email').isLength({ min: 10 }).withMessage('Email must be at least 10 characters long'),
-    // body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long'),
+    body('username').isLength({ min: 3 }).withMessage('Password must be at least 3 characters long'),
+    body('email').isEmail().withMessage('Invalid email'),
+    body('email').isLength({ min: 10 }).withMessage('Email must be at least 10 characters long'),
+    body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long'),
     async (req, res) => {
 
         console.log(req.body);
 
         try {
-            // const { errors } = validationResult(req);
-            // if (errors.length > 0) {
-            //     throw errors;
-            // }
+            const { errors } = validationResult(req);
+            if (errors.length > 0) {
+                throw errors;
+            }
 
             const img = {
-                //"data": fs.readFileSync("uploads/" + req.file.filename),
-                "data": req.file,
+                "data": fs.readFileSync("uploads/" + req.file.filename),
                 "contentType": "image/png",
             }
 
